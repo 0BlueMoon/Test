@@ -1,0 +1,32 @@
+local Library = loadstring(Game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
+
+local PhantomForcesWindow = Library:NewWindow("Minerace")
+
+local BlueMoon = PhantomForcesWindow:NewSection("Main")
+
+BlueMoon:CreateButton("InfGem", function()
+    for i = 1,1000 do 
+        local args = { 
+             [1] = "Quarry.ReachedSection", 
+             [2] =1 
+        
+        } game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+        
+         end
+end)
+
+BlueMoon:CreateToggle("Auto ez", function(value)
+    local path = game:GetService("Players").LocalPlayer.PlayerGui.Effects
+    if path then path:Destroy() end
+    _G.Loop = true
+    while true do
+    local args = {
+        [1] = "Quarry.ReachedSection",
+        [2] = 1
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+    wait()
+    end
+    end)
+    
