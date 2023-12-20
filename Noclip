@@ -4,28 +4,31 @@ local PhantomForcesWindow = Library:NewWindow("Script")
 
 local KillingCheats = PhantomForcesWindow:NewSection("Script")
 
-KillingCheats:CreateToggle("Noclip", function(value)
-    local Noclip = nil
-    local Clip = nil
-    function noclip()
-        Clip = false
-        local function Noclip()
-            if Clip == false and game.Players.LocalPlayer.Character ~= nil then
-                for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                    if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
-                        v.CanCollide = false
-                    end
+getgenv().noclip = nil
+getgenv().noclip = value
+BlueMoon:CreateToggle("SuperMan", function(value)
+if getgenv().noclip == true then
+local Noclip = nil
+local Clip = nil
+function noclip()
+    Clip = false
+    local function Noclip()
+        if Clip == false and game.Players.LocalPlayer.Character ~= nil then
+            for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
+                    v.CanCollide = false
                 end
             end
-            wait(0)
         end
-        Noclip = game:GetService('RunService').Stepped:Connect(Noclip)
+        wait(0)
     end
-    function clip()
-        if Noclip then Noclip:Disconnect() end
-        Clip = true
-    end
-    noclip()
+    Noclip = game:GetService('RunService').Stepped:Connect(Noclip)
+end
+function clip()
+    if Noclip then Noclip:Disconnect() end
+    Clip = true
+end
+noclip()
 else
 local Noclip = nil
 local Clip = nil
@@ -48,4 +51,5 @@ function clip()
     Clip = true
 end
 noclip()
-    end)
+end
+end)
