@@ -4,10 +4,10 @@ local PhantomForcesWindow = Library:NewWindow("Noclip")
 
 local BlueMoon = PhantomForcesWindow:NewSection("Noclip")
 
-getgenv().noclip = nil
 BlueMoon:CreateToggle("Noclip", function(value)
+    getgenv().noclip = nil
 getgenv().noclip = value
-if getgenv().noclip == true and task.wait() then
+if getgenv().noclip == true then
 local Noclip = nil
 local Clip = nil
 function noclip()
