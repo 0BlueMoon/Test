@@ -1,11 +1,11 @@
 local Library = loadstring(Game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
 
-local PhantomForcesWindow = Library:NewWindow("Script")
+local PhantomForcesWindow = Library:NewWindow("Noclip")
 
-local KillingCheats = PhantomForcesWindow:NewSection("Script")
+local BlueMoon = PhantomForcesWindow:NewSection("Noclip")
 
+getgenv().noclip = nil
 BlueMoon:CreateToggle("Noclip", function(value)
-    getgenv().noclip = nil
 getgenv().noclip = value
 if getgenv().noclip == true and task.wait() then
 local Noclip = nil
