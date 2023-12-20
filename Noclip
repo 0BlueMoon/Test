@@ -5,9 +5,9 @@ local PhantomForcesWindow = Library:NewWindow("Script")
 local KillingCheats = PhantomForcesWindow:NewSection("Script")
 
 getgenv().noclip = nil
+BlueMoon:CreateToggle("Noclip", function(value)
 getgenv().noclip = value
-BlueMoon:CreateToggle("SuperMan", function(value)
-if getgenv().noclip == true then
+if getgenv().noclip == true and task.wait() then
 local Noclip = nil
 local Clip = nil
 function noclip()
