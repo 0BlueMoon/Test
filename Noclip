@@ -1,55 +1,73 @@
 local Library = loadstring(Game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
+local window = Library:NewWindow("Học đi Đừng như thk thien")
 
-local PhantomForcesWindow = Library:NewWindow("Noclip")
+getgenv().buy = nil
+getgenv().error = nil
+getgenv().max = 1
 
-local BlueMoon = PhantomForcesWindow:NewSection("Noclip")
+local slide = window:NewSection("Slde1")
 
-BlueMoon:CreateToggle("Noclip", function(value)
-    getgenv().noclip = nil
-getgenv().noclip = value
-if getgenv().noclip == true then
-local Noclip = nil
-local Clip = nil
-function noclip()
-    Clip = false
-    local function Noclip()
-        if Clip == false and game.Players.LocalPlayer.Character ~= nil then
-            for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
-                    v.CanCollide = false
+slide:CreateToggle("Auto Buy Limited (0 Only)", function(buy)
+
+    getgenv().buy = buy
+    local maxprice = getgenv().max
+    spawn(function()
+
+        while task.wait(.75) and getgenv().buy == true do
+            if game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator:FindFirstChild("Prompt") and
+                game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt:FindFirstChild("AlertContents") and
+                game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt.AlertContents:FindFirstChild(
+                    "Footer") and
+                game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt.AlertContents.Footer:FindFirstChild(
+                    "Buttons") and
+                game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt.AlertContents.Footer.Buttons:FindFirstChild(
+                    "2") and
+                game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt.AlertContents.Footer.Buttons[2]:FindFirstChild(
+                    "ButtonContent").ButtonMiddleContent and
+                game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt.AlertContents.Footer.Buttons[2]:FindFirstChild(
+                    "ButtonContent").ButtonMiddleContent:FindFirstChildOfClass("TextLabel") and tonumber(
+                game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt.AlertContents.Footer.Buttons[2]:FindFirstChild(
+                    "ButtonContent").ButtonMiddleContent:FindFirstChildOfClass("TextLabel").Text) <= tonumber(maxprice) then
+
+
+                        local yes = game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt.AlertContents
+                                        .Footer.Buttons[2].AbsolutePosition
+                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(yes.X + tonumber(5),
+                            yes.Y + tonumber(65.5), 0, true, game, 1)
+                        task.wait()
+                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(yes.X + tonumber(55),
+                            yes.Y + tonumber(65.5), 0, false, game, 1)
+
+            end
+        end
+    end)
+end)
+
+slide:CreateToggle("Auto Close Error", function(error)
+    getgenv().error = error
+    spawn(function()
+        while task.wait(.75) and getgenv().error == true do
+            if game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator:FindFirstChild("Prompt") and
+                game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt:FindFirstChild("AlertContents") and
+                game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt.AlertContents:FindFirstChild(
+                    "Footer") and
+                game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt.AlertContents.Footer:FindFirstChild(
+                    "Buttons") and
+                not game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt.AlertContents.Footer.Buttons:FindFirstChild(
+                    "2") then
+                if game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt.AlertContents.Footer.Buttons:FindFirstChild(
+                    "1") then
+
+                            local yes = game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt
+                                            .AlertContents.Footer.Buttons[1].AbsolutePosition
+                            game:GetService("VirtualInputManager"):SendMouseButtonEvent(yes.X + tonumber(55),
+                                yes.Y + tonumber(65.5), 0, true, game, 1)
+                            task.wait()
+                            game:GetService("VirtualInputManager"):SendMouseButtonEvent(yes.X + tonumber(55),
+                                yes.Y + tonumber(65.5), 0, false, game, 1)
+
                 end
             end
         end
-        wait(0)
-    end
-    Noclip = game:GetService('RunService').Stepped:Connect(Noclip)
-end
-function clip()
-    if Noclip then Noclip:Disconnect() end
-    Clip = true
-end
-noclip()
-else
-local Noclip = nil
-local Clip = nil
-function noclip()
-    Clip = false
-    local function Noclip()
-        if Clip == false and game.Players.LocalPlayer.Character ~= nil then
-            for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
-                    v.CanCollide = true
-                end
-            end
-        end
-        wait(0)
-    end
-    Noclip = game:GetService('RunService').Stepped:Connect(Noclip)
-end
-function clip()
-    if Noclip then Noclip:Disconnect() end
-    Clip = true
-end
-noclip()
-end
+    end)
 end)
