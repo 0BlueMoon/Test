@@ -32,11 +32,11 @@ slide:CreateToggle("Auto Buy Limited (0 Only)", function(buy)
 
                         local yes = game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt.AlertContents
                                         .Footer.Buttons[2].AbsolutePosition
-                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(yes.X + tonumber(1),
-                            yes.Y + tonumber(50), 0, true, game, 1)
+                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(yes.X + tonumber(),
+                            yes.Y + tonumber(), 0, true, game, 1)
                         task.wait()
-                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(yes.X + tonumber(10),
-                            yes.Y + tonumber(50), 0, false, game, 1)
+                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(yes.X + tonumber(),
+                            yes.Y + tonumber(), 0, false, game, 1)
 
             end
         end
@@ -60,11 +60,11 @@ slide:CreateToggle("Auto Close Error", function(error)
 
                             local yes = game.CoreGui.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt
                                             .AlertContents.Footer.Buttons[1].AbsolutePosition
-                            game:GetService("VirtualInputManager"):SendMouseButtonEvent(yes.X + tonumber(10),
-                                yes.Y + tonumber(50), 0, true, game, 1)
+                            game:GetService("VirtualInputManager"):SendMouseButtonEvent(yes.X + tonumber(),
+                                yes.Y + tonumber(), 0, true, game, 1)
                             task.wait()
-                            game:GetService("VirtualInputManager"):SendMouseButtonEvent(yes.X + tonumber(10),
-                                yes.Y + tonumber(50), 0, false, game, 1)
+                            game:GetService("VirtualInputManager"):SendMouseButtonEvent(yes.X + tonumber(),
+                                yes.Y + tonumber(0), 0, false, game, 1)
 
                 end
             end
