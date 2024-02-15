@@ -236,7 +236,31 @@ local function DisableFullBright()
     game:GetService("Lighting").GlobalShadows = NormalLightingSettings.GlobalShadows
     game:GetService("Lighting").Ambient = NormalLightingSettings.Ambient
 end
-
+slide3:CreateToggle("FreezeCharacter", function(value)
+    if value then
+        for _, player in pairs(game.Players:GetPlayers()) do
+            local character = player.Character
+            if character then
+                for _, part in ipairs(character:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        part.Anchored = true
+                    end
+                end
+            end
+        end
+    else
+        for _, player in pairs(game.Players:GetPlayers()) do
+            local character = player.Character
+            if character then
+                for _, part in ipairs(character:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        part.Anchored = false
+                    end
+                end
+            end
+        end
+    end
+end)
 slide3:CreateToggle("Nofog/fullbright", function(value)
     if value then
         if not FullBrightEnabled then
@@ -249,47 +273,5 @@ slide3:CreateToggle("Nofog/fullbright", function(value)
     end
 end)
 
-
-local FullBrightEnabled = false
-local NormalLightingSettings = {}
-
-local function EnableFullBright()
-    FullBrightEnabled = true
-    
-    NormalLightingSettings.Brightness = game:GetService("Lighting").Brightness
-    NormalLightingSettings.ClockTime = game:GetService("Lighting").ClockTime
-    NormalLightingSettings.FogEnd = game:GetService("Lighting").FogEnd
-    NormalLightingSettings.GlobalShadows = game:GetService("Lighting").GlobalShadows
-    NormalLightingSettings.Ambient = game:GetService("Lighting").Ambient
-    
-
-    game:GetService("Lighting").Brightness = 1
-    game:GetService("Lighting").ClockTime = 12
-    game:GetService("Lighting").FogEnd = 786543
-    game:GetService("Lighting").GlobalShadows = false
-    game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
-end
-
-local function DisableFullBright()
-    FullBrightEnabled = false
-    
-    game:GetService("Lighting").Brightness = NormalLightingSettings.Brightness
-    game:GetService("Lighting").ClockTime = NormalLightingSettings.ClockTime
-    game:GetService("Lighting").FogEnd = NormalLightingSettings.FogEnd
-    game:GetService("Lighting").GlobalShadows = NormalLightingSettings.GlobalShadows
-    game:GetService("Lighting").Ambient = NormalLightingSettings.Ambient
-end
-
-slide3:CreateToggle("Nofog/fullbright", function(value)
-    if value then
-        if not FullBrightEnabled then
-            EnableFullBright()
-        end
-    else
-        if FullBrightEnabled then
-            DisableFullBright()
-        end
-    end
-end)
 
 local slide4 = PhantomForcesWindow:NewSection("BY:Moon")
