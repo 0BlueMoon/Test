@@ -2,26 +2,39 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/blood
 local PhantomForcesWindow = Library:NewWindow("Huy beo")
 local slide1 = PhantomForcesWindow:NewSection("Main")
 
-local isSimpleSpyEnabled = false
+local isAutoFarmEnabled = false
+local isAutoJumpEnabled = false
 
 slide1:CreateToggle("Auto Farm", function(toggleState)
-    isSimpleSpyEnabled = toggleState
+    isAutoFarmEnabled = toggleState
     if toggleState then
-        getgenv().Loop = true
-        while getgenv().Loop and task.wait()
-        SimpleSpy()
+        getgenv().AutoFarmLoop = true
+        while getgenv().AutoFarmLoop do
+            task.wait()
+            SimpleSpy()
         end
     else
-        getgenv().Loop = false
+        getgenv().AutoFarmLoop = false
     end
 end)
 
-function SimpleSpy()
-    local partNames = "item"
-    local player = game.Players.LocalPlayer
-    local delayBetweenCoins = 0.1  -- Thời gian đợi giữa các lần di chuyển (tính bằng giây)
+slide1:CreateButton("Auto Jump", function()
+    isAutoJumpEnabled = not isAutoJumpEnabled
+    setAutoJumpEnabled(isAutoJumpEnabled)
+end)
 
-    for i, partName in ipairs(partNames) do
+function setAutoJumpEnabled(enabled)
+    local Character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+    local Humanoid = Character:WaitForChild("Humanoid")
+    Humanoid.AutoJumpEnabled = enabled
+end
+
+function SimpleSpy()
+    local partNames = {"item"}
+    local player = game.Players.LocalPlayer
+    local delayBetweenCoins = 0.1
+
+    for _, partName in ipairs(partNames) do
         for _, v in pairs(workspace:GetDescendants()) do
             if v.Name:lower() == partName:lower() and v:IsA("BasePart") then
                 local humanoid = player.Character:FindFirstChildOfClass('Humanoid')
@@ -30,30 +43,11 @@ function SimpleSpy()
                     wait(0.1)
                 end
                 wait(0.1)
-                if isSimpleSpyEnabled then
+                if isAutoFarmEnabled then
                     player.Character:SetPrimaryPartCFrame(v.CFrame)
                 end
-                wait(delayBetweenCoins)  -- Đợi một khoảng thời gian trước khi di chuyển đến coin tiếp theo
+                wait(delayBetweenCoins)
             end
         end
     end
 end
-
-
-slide1:CreateButton("Auto Jump", function()
-
-local Game = game
-local Players = Game:GetService("Players")
-local Player = Players.LocalPlayer
-
-local function setAutoJumpEnabled()
-    local Character = Player.Character or Player.CharacterAdded:Wait()
-    local Humanoid = Character:WaitForChild("Humanoid")
-    Humanoid.AutoJumpEnabled = false
-end
-
-setAutoJumpEnabled()
-
-Player.CharacterAdded:Connect(setAutoJumpEnabled)
-end)
-
