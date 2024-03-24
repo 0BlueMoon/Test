@@ -11,26 +11,16 @@ slide1:CreateToggle("Auto Farm", function(toggleState)
         getgenv().AutoFarmLoop = true
         while getgenv().AutoFarmLoop do
             task.wait()
-            SimpleSpy()
+            Hoy777()
         end
     else
         getgenv().AutoFarmLoop = false
     end
 end)
 
-slide1:CreateButton("Auto Jump", function()
-    isAutoJumpEnabled = not isAutoJumpEnabled
-    setAutoJumpEnabled(isAutoJumpEnabled)
-end)
 
-function setAutoJumpEnabled(enabled)
-    local Character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
-    local Humanoid = Character:WaitForChild("Humanoid")
-    Humanoid.AutoJumpEnabled = enabled
-end
-
-function SimpleSpy()
-    local partNames = {"item"}
+function Hoy777()
+    local partNames = "item"
     local player = game.Players.LocalPlayer
     local delayBetweenCoins = 0.1
 
@@ -51,3 +41,20 @@ function SimpleSpy()
         end
     end
 end
+
+slide1:CreateButton("Auto Jump", function()
+
+local Game = game
+local Players = Game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function setAutoJumpEnabled()
+    local Character = Player.Character or Player.CharacterAdded:Wait()
+    local Humanoid = Character:WaitForChild("Humanoid")
+    Humanoid.AutoJumpEnabled = false
+end
+
+setAutoJumpEnabled()
+
+Player.CharacterAdded:Connect(setAutoJumpEnabled)
+end)
