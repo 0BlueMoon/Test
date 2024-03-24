@@ -1,1 +1,59 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
+local PhantomForcesWindow = Library:NewWindow("Huy beo")
+local slide1 = PhantomForcesWindow:NewSection("Main")
+
+local isSimpleSpyEnabled = false
+
+slide1:CreateToggle("Auto Farm", function(toggleState)
+    isSimpleSpyEnabled = toggleState
+    if toggleState then
+        getgenv().Loop = true
+        while getgenv().Loop and task.wait()
+        SimpleSpy()
+        end
+    else
+        getgenv().Loop = false
+    end
+end)
+
+function SimpleSpy()
+    local partNames = "item"
+    local player = game.Players.LocalPlayer
+    local delayBetweenCoins = 0.1  -- Thời gian đợi giữa các lần di chuyển (tính bằng giây)
+
+    for i, partName in ipairs(partNames) do
+        for _, v in pairs(workspace:GetDescendants()) do
+            if v.Name:lower() == partName:lower() and v:IsA("BasePart") then
+                local humanoid = player.Character:FindFirstChildOfClass('Humanoid')
+                if humanoid and humanoid.SeatPart then
+                    humanoid.Sit = false
+                    wait(0.1)
+                end
+                wait(0.1)
+                if isSimpleSpyEnabled then
+                    player.Character:SetPrimaryPartCFrame(v.CFrame)
+                end
+                wait(delayBetweenCoins)  -- Đợi một khoảng thời gian trước khi di chuyển đến coin tiếp theo
+            end
+        end
+    end
+end
+
+
+slide1:CreateButton("Auto Jump", function()
+
+local Game = game
+local Players = Game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function setAutoJumpEnabled()
+    local Character = Player.Character or Player.CharacterAdded:Wait()
+    local Humanoid = Character:WaitForChild("Humanoid")
+    Humanoid.AutoJumpEnabled = false
+end
+
+setAutoJumpEnabled()
+
+Player.CharacterAdded:Connect(setAutoJumpEnabled)
+end)
 
